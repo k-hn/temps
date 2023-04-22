@@ -1,11 +1,31 @@
 import mist
 import gleam/erlang/process
 import routes
-
-const port: Int = 8080
+import glimt
+import loggers
+import gleam/int
+import gleam/erlang/os
+import gleam/result
 
 pub fn main() {
-  // todo: Log server start message(json)
+  let port: Int = case os.get_env("PORT") {
+    Ok(port) ->
+      port
+      |> int.parse
+      |> result.unwrap(8080)
+    Error(_) -> 8080
+  }
+  let host =
+    os.get_env("HOST")
+    |> result.unwrap("127.0.0.1")
+
+  // Log server start message(json)
+  let json_logger = loggers.get_json_logger(name: "json_logger")
+
+  json_logger
+  |> glimt.info(
+    "Server running on http://" <> host <> ":" <> int.to_string(port),
+  )
 
   // start server
   let assert Ok(_) =

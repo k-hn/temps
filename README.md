@@ -8,7 +8,7 @@ An API exploring json, datetimes, and the mist framework. I'm trying this out to
 ## Quick start
 
 ```sh
-gleam run   # Run the project
+<env_vars> gleam run   # Run the project
 gleam test  # Run the tests
 gleam shell # Run an Erlang shell
 ```
